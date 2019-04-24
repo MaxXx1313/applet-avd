@@ -20,4 +20,6 @@ Applet checks if machines is running and mark items with dot shortly after popup
 Development
 ---------
 
-Restar extension `gnome-shell-extension-tool -r applet-avd@fomy.spam-gmail.com`
+Restart extension: Alt+F2 -> r
+
+Extension logs: `journalctl -f | grep 'avd-applet'`
