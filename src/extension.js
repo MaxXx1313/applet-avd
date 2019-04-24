@@ -9,23 +9,25 @@ const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
-const TEXT_VBOXAPP = 'VirtualBox applet';
-const TEXT_LOGID   = 'vbox-applet';
+const TEXT_APPNAME = 'AVD applet';
+const TEXT_LOGID   = 'avd-applet';
 const ICON_SIZE    = 22;
-const DEBUG        = false;
+const DEBUG        = true;
 
-let vboxapplet;
+let applet;
 let enabled = false;
 
-class VBoxApplet extends PanelMenu.Button
-{
+class AVDApplet extends PanelMenu.Button {
+
     constructor() {
-        super( 0.0, TEXT_VBOXAPP );
+        super( 0.0, TEXT_APPNAME );
+        
+        this._log('Create applet');
 
         this._populated = false;
         this._menuitems = [];
         let hbox = new St.BoxLayout( { style_class: 'panel-status-menu-box' } );
-        let gicon = Gio.icon_new_for_string( Me.path + '/icons/vbox.svg' );
+        let gicon = Gio.icon_new_for_string( Me.path + '/icons/avd.svg' );
         hbox.add_child( new St.Icon( { gicon: gicon, icon_size: ICON_SIZE } ) );
         this.actor.add_child(hbox);
         this.menu.actor.connect('notify::visible', this._onVisibilityChanged.bind(this));
@@ -84,7 +86,7 @@ class VBoxApplet extends PanelMenu.Button
         }
         catch (err) {
             this._log( err );
-            Main.notifyError( TEXT_VBOXAPP + ': ' + err );
+            Main.notifyError( TEXT_APPNAME + ': ' + err );
             return;
         }
 
@@ -129,8 +131,7 @@ class VBoxApplet extends PanelMenu.Button
         return this.searchInVMs( machines, id );
     }
 
-    _getRunningVMs()
-    {
+    _getRunningVMs() {
         let vms;
         try {
             this._log( 'Run \'vboxmanage list runningvms\'' );
@@ -150,8 +151,7 @@ class VBoxApplet extends PanelMenu.Button
         }
     }
 
-    _markRunning()
-    {
+    _markRunning() {
         let machines = this._getRunningVMs();
 
         for (var i = 0; i < this._menuitems.length; i++) {
@@ -160,8 +160,7 @@ class VBoxApplet extends PanelMenu.Button
         }
     }
 
-    searchInVMs( machines, id )
-    {
+    searchInVMs( machines, id ) {
         for ( var i = 0; i < machines.length; i++ ) {
             if ( machines[i].id === id ) {
                 return true;
@@ -170,8 +169,7 @@ class VBoxApplet extends PanelMenu.Button
         return false;
     }
 
-    _activateWindow( name )
-    {
+    _activateWindow( name ) {
         let a = global.get_window_actors();
         for (var i = 0; i < a.length; i++)
         {
@@ -189,11 +187,11 @@ class VBoxApplet extends PanelMenu.Button
 
 function enable() {
     enabled = true;
-    vboxapplet = new VBoxApplet;
-    Main.panel.addToStatusArea( TEXT_VBOXAPP, vboxapplet );
+    applet = new AVDApplet();
+    Main.panel.addToStatusArea( TEXT_APPNAME, applet );
 }
 
 function disable() {
     enabled = false;
-    vboxapplet.destroy();
+    applet.destroy();
 }

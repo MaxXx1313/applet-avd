@@ -9,3 +9,15 @@ Applet checks if machines is running and mark items with dot shortly after popup
 
 ![screenshot](screenshot.png?raw=true)
 
+
+
+
+
+
+
+
+
+Development
+---------
+
+Restar extension `gnome-shell-extension-tool -r applet-avd@fomy.spam-gmail.com`
