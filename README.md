@@ -1,11 +1,15 @@
-# VirtualBox applet
+# AVD applet
 
-Gnome Shell VirtualBox applet provide menu to run VirtualBox machines and switch between running VMs.
+Gnome Shell AVD applet provide menu to run Android Virtual device without launching Android Studio.
 
-VM list populated after 5 seconds after extension is activated, to not slow down screen unlock.
+Device list populated after 5 seconds after extension is activated, to not slow down screen unlock.
 (Gnome Shell deactivates all extensions on screen lock and activates on unlock).
 
-Applet checks if machines is running and mark items with dot shortly after popup becomes visible.
+It's expected to have Android Sdk Tools installed in default location : `~/Android/Sdk`.
+
+So far it's not able to create device or run AVD Manager.
+
+ 
 
 ![screenshot](screenshot.png?raw=true)
 
