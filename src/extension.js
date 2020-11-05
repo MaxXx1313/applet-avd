@@ -1,29 +1,31 @@
 /* global imports */
 
-const St = imports.gi.St;
-const Gio = imports.gi.Gio;
+const { GLib, Gio, GObject, St, Shell } = imports.gi;
+
+const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const GLib = imports.gi.GLib;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
+const ByteArray = imports.byteArray;
 
 const TEXT_APPNAME = 'AVD applet';
 const TEXT_LOGID   = 'avd-applet';
 const ICON_SIZE    = 22;
 const DEBUG        = true;
 
+global.log(TEXT_LOGID, 'AVDApplet');
 
 let applet;
 let enabled = false;
 
+// trying to construct an object without GType
+
+let AVDApplet = GObject.registerClass(
 class AVDApplet extends PanelMenu.Button {
 
-    constructor() {
-        super( 0.0, TEXT_APPNAME );
-        
+    _init() {
         this._log('Create applet');
+        super._init( 0.0, TEXT_APPNAME );
 
         // set ANDROID_HOME env
         this.homeDir = GLib.getenv('HOME');
@@ -60,7 +62,7 @@ class AVDApplet extends PanelMenu.Button {
         this._tmpItem = new PopupMenu.PopupMenuItem( '...' );
         this.menu.addMenuItem( this._tmpItem );
 
-        Mainloop.timeout_add_seconds( 5, this.populateMenu.bind(this) );
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 5000, this.populateMenu.bind(this) );
     }
 
     // startVbox() {
@@ -188,7 +190,7 @@ class AVDApplet extends PanelMenu.Button {
 
     _onVisibilityChanged() {
         if ( this.menu.actor.visible && this._populated ) {
-            Mainloop.timeout_add( 200, this._markRunning.bind(this) );
+           GLib.timeout_add(GLib.PRIORITY_DEFAULT, 200, this._markRunning.bind(this) );
         }
     }
 
@@ -223,13 +225,17 @@ class AVDApplet extends PanelMenu.Button {
     //         }
     //     }
     // }
-};
+});
 
 
 function enable() {
-    enabled = true;
-    applet = new AVDApplet();
-    Main.panel.addToStatusArea( TEXT_APPNAME, applet );
+    try {
+        enabled = true;
+        applet = new AVDApplet;
+        Main.panel.addToStatusArea( TEXT_APPNAME, applet );
+    } catch(e){
+        global.log(TEXT_LOGID, e);
+    }
 }
 
 function disable() {

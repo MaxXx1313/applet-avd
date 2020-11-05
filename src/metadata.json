@@ -1,8 +1,8 @@
 {
     "name": "AVD applet",
-    "version": "0.1",
+    "version": "0.2",
     "description": "Provide menu to run android virtual devices",
     "url": "https://github.com/maxxx1313/applet-avd",
     "uuid": "applet-avd@fomy.spam-gmail.com",
-    "shell-version": ["3.26.0", "3.28.0"]
+    "shell-version": ["3.36"]
 }
