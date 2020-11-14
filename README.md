@@ -13,12 +13,14 @@ So far it's not able to create device or run AVD Manager.
 
 ![screenshot](screenshot.png?raw=true)
 
+Installation
+------------
 
-
+Go to [AVD applet](https://extensions.gnome.org/extension/1777/avd-applet/) to download/enable it
 
 
 Development
----------
+-----------
 
 Restart extension: `Alt`+`F2` -> `r`
 
