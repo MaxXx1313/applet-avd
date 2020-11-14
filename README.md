@@ -17,13 +17,11 @@ So far it's not able to create device or run AVD Manager.
 
 
 
-
-
-
-
 Development
 ---------
 
-Restart extension: Alt+F2 -> r
+Restart extension: `Alt`+`F2` -> `r`
 
-Extension logs: `journalctl -f | grep 'avd-applet'`
+Extension logs can be seen in one of the following ways:
+- `Alt`+`F2` -> `lg`
+- `journalctl -f | grep 'avd-applet'`
